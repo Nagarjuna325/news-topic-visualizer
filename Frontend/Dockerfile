@@ -34,8 +34,8 @@ COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 EXPOSE 80
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+# HEALTHCHECK --interval=30s --timeout=3s \
+#     CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
