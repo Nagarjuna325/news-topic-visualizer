@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
 const SAMPLE_URLS = [
-  'https://www.bbc.com/news/technology',
-  'https://techcrunch.com/',
-  'https://www.wired.com/',
-  'https://arstechnica.com/'
+  'https://www.bbc.com/news/world-us-canada-68835509',
+  'https://www.theguardian.com/technology/2024/may/01/ai-regulation-global-outlook',
+  'https://www.nytimes.com/2024/05/15/technology/ai-search-changes.html',
+  'https://www.wired.com/story/cybersecurity-supply-chain-attacks-rise/',
+  'https://arstechnica.com/science/2024/05/a-new-battery-breakthrough-promises-higher-energy-density/'
 ];
 
 const URLInput = ({ onAnalyze, isLoading }) => {
   const [url, setUrl] = useState('');
+  const [method, setMethod] = useState('tfidf');
   const [error, setError] = useState('');
 
   const validateURL = (urlString) => {
@@ -34,7 +36,7 @@ const URLInput = ({ onAnalyze, isLoading }) => {
       return;
     }
 
-    onAnalyze(url);
+    onAnalyze(url, method);
   };
 
   const handleSampleClick = (sampleUrl) => {
@@ -51,6 +53,31 @@ const URLInput = ({ onAnalyze, isLoading }) => {
         </p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.methodRow}>
+            <label style={styles.methodLabel}>Method:</label>
+            <label style={styles.radioOption}>
+              <input
+                type="radio"
+                name="method"
+                value="tfidf"
+                checked={method === 'tfidf'}
+                onChange={() => setMethod('tfidf')}
+                disabled={isLoading}
+              />
+              TF‑IDF
+            </label>
+            <label style={styles.radioOption}>
+              <input
+                type="radio"
+                name="method"
+                value="lda"
+                checked={method === 'lda'}
+                onChange={() => setMethod('lda')}
+                disabled={isLoading}
+              />
+              LDA
+            </label>
+          </div>
           <div style={styles.inputGroup}>
             <input
               type="text"
@@ -126,6 +153,24 @@ const styles = {
     maxWidth: '600px',
     width: '100%',
     boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+  },
+  methodRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    marginBottom: '12px',
+  },
+  methodLabel: {
+    fontSize: '14px',
+    color: '#4a5568',
+    fontWeight: 600,
+  },
+  radioOption: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    fontSize: '14px',
+    color: '#2d3748',
   },
   title: {
     fontSize: '32px',

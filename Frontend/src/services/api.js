@@ -15,9 +15,9 @@ const api = axios.create({
  * @param {string} url - The article URL to analyze
  * @returns {Promise} API response with word cloud data
  */
-export const analyzeArticle = async (url) => {
+export const analyzeArticle = async (url, method = 'tfidf') => {
   try {
-    const response = await api.post('/analyze', { url });
+    const response = await api.post('/analyze', { url, method });
     return response.data;
   } catch (error) {
     if (error.response) {

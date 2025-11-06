@@ -8,11 +8,13 @@ from typing import List, Optional, Dict
 class URLRequest(BaseModel):
     """Request model for article URL"""
     url: HttpUrl
+    method: Optional[str] = None  # 'tfidf' (default) or 'lda'
     
     class Config:
         json_schema_extra = {
             "example": {
-                "url": "https://www.bbc.com/news/technology"
+                "url": "https://www.bbc.com/news/technology",
+                "method": "tfidf"
             }
         }
 

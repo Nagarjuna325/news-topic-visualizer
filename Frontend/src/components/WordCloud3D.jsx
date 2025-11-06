@@ -41,7 +41,7 @@ const Word3D = ({ word, weight, position, color }) => {
       outlineWidth={0.02}
       outlineColor="#000000"
     >
-      {word}
+      {hovered ? `${word} (${weight.toFixed(2)})` : word}
     </Text>
   );
 };
@@ -57,23 +57,32 @@ const WordCloudScene = ({ words }) => {
     }
   });
 
+  // Map weight to discrete relevance buckets (low/medium/high)
+  const weightToColor = (w) => {
+    if (w >= 0.66) return 'hsl(360, 80%, 60%)'; // high - red
+    if (w >= 0.33) return 'hsl(280, 80%, 60%)'; // medium - purple
+    return 'hsl(200, 80%, 60%)'; // low - blue
+  };
+
   // Generate positions in a sphere
   const wordPositions = useMemo(() => {
     const positions = [];
-    const radius = 5;
+    const minR = 2.5; // heavier words closer to center
+    const maxR = 6;
 
     words.forEach((wordData, index) => {
       // Fibonacci sphere distribution for even spacing
       const phi = Math.acos(-1 + (2 * index) / words.length);
       const theta = Math.sqrt(words.length * Math.PI) * phi;
 
-      const x = radius * Math.cos(theta) * Math.sin(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(phi);
+      const clampedW = Math.min(Math.max(wordData.weight, 0), 1);
+      const r = minR + (maxR - minR) * (1 - clampedW);
+      const x = r * Math.cos(theta) * Math.sin(phi);
+      const y = r * Math.sin(theta) * Math.sin(phi);
+      const z = r * Math.cos(phi);
 
-      // Color based on weight (gradient from blue to red)
-      const hue = 200 + (wordData.weight * 160); // 200 (blue) to 360 (red)
-      const color = `hsl(${hue}, 80%, 60%)`;
+      // Discrete color buckets by weight
+      const color = weightToColor(wordData.weight);
 
       positions.push({
         ...wordData,
@@ -145,6 +154,12 @@ const ParticleField = () => {
 
 // Main Component
 const WordCloud3D = ({ data, onBack }) => {
+  const topWords = useMemo(() => {
+    return [...(data?.words || [])]
+      .sort((a, b) => b.weight - a.weight)
+      .slice(0, 15);
+  }, [data]);
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -156,6 +171,25 @@ const WordCloud3D = ({ data, onBack }) => {
           <p style={styles.stats}>
             {data.total_words} topics extracted • Hover over words to highlight
           </p>
+        </div>
+      </div>
+
+      {/* Right side panel with top words */}
+      <div style={styles.sidebar}>
+        <div style={styles.sidebarHeader}>Top Keywords</div>
+        <div style={styles.sidebarList}>
+          {topWords.map((w, i) => (
+            <div key={`${w.word}-${i}`} style={styles.sidebarItem}>
+              <div style={styles.sidebarWordRow}>
+                <span style={styles.sidebarIndex}>{i + 1}</span>
+                <span style={styles.sidebarWord}>{w.word}</span>
+                <span style={styles.sidebarWeight}>{w.weight.toFixed(2)}</span>
+              </div>
+              <div style={styles.progressTrack}>
+                <div style={{ ...styles.progressBar, width: `${Math.round(w.weight * 100)}%` }} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -265,6 +299,75 @@ const styles = {
     gap: '20px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     zIndex: 10,
+  },
+  sidebar: {
+    position: 'absolute',
+    top: '110px',
+    right: '40px',
+    width: '280px',
+    maxHeight: '60vh',
+    overflowY: 'auto',
+    background: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '10px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+    padding: '16px',
+    zIndex: 11,
+  },
+  sidebarHeader: {
+    fontSize: '14px',
+    fontWeight: 700,
+    color: '#2d3748',
+    marginBottom: '10px',
+  },
+  sidebarList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  sidebarItem: {
+    background: 'rgba(0,0,0,0.03)',
+    borderRadius: '8px',
+    padding: '10px',
+  },
+  sidebarWordRow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+    marginBottom: '6px',
+  },
+  sidebarIndex: {
+    fontSize: '12px',
+    color: '#718096',
+    width: '20px',
+    textAlign: 'right',
+  },
+  sidebarWord: {
+    flex: 1,
+    fontSize: '14px',
+    color: '#2d3748',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    padding: '0 6px',
+  },
+  sidebarWeight: {
+    fontFamily: 'monospace',
+    fontSize: '12px',
+    color: '#4a5568',
+    width: '40px',
+    textAlign: 'right',
+  },
+  progressTrack: {
+    width: '100%',
+    height: '6px',
+    borderRadius: '4px',
+    background: 'rgba(0,0,0,0.08)',
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    background: 'linear-gradient(90deg, #667eea, #764ba2)',
   },
   legendItem: {
     display: 'flex',

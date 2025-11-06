@@ -28,11 +28,11 @@ function App() {
       });
   }, []);
 
-  const handleAnalyze = async (url) => {
+  const handleAnalyze = async (url, method = 'tfidf') => {
     setState(prev => ({ ...prev, mode: 'loading', error: null }));
 
     try {
-      const result = await analyzeArticle(url);
+      const result = await analyzeArticle(url, method);
       
       if (result.success && result.words.length > 0) {
         setState({
@@ -76,12 +76,17 @@ function App() {
   }
 
   if (state.mode === 'error') {
+    const shortError = (state.error || '').toLowerCase().includes('too short');
+    const errorTitle = shortError ? 'Article Too Short' : 'Oops! Something went wrong';
     return (
       <div style={styles.fullscreen}>
         <div style={styles.errorContainer}>
-          <div style={styles.errorIcon}>⚠️Try a specific news article (not a homepage) with enough text content.</div>
-          <h2 style={styles.errorTitle}></h2>
+          <div style={styles.errorIcon}>⚠️</div>
+          <h2 style={styles.errorTitle}>{errorTitle}</h2>
           <p style={styles.errorMessage}>{state.error}</p>
+          {shortError && (
+            <p style={styles.errorHint}>Try a specific news article (not a homepage) with enough text content.</p>
+          )}
           <button onClick={handleRetry} style={styles.retryButton}>
             Try Again
           </button>
@@ -125,32 +130,42 @@ const styles = {
   errorContainer: {
     background: 'rgba(255, 255, 255, 0.95)',
     borderRadius: '20px',
-    padding: '40px',
-    maxWidth: '500px',
+    padding: '28px',
+    maxWidth: '520px',
     margin: '0 auto',
     marginTop: '10vh',
     textAlign: 'center',
     boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+    overflow: 'hidden',
   },
   errorIcon: {
-    fontSize: '64px',
-    marginBottom: '20px',
+    fontSize: '48px',
+    marginBottom: '12px',
   },
   errorTitle: {
-    fontSize: '24px',
+    fontSize: '20px',
     fontWeight: '700',
     color: '#2d3748',
-    marginBottom: '15px',
+    marginBottom: '10px',
   },
   errorMessage: {
-    fontSize: '16px',
+    fontSize: '14px',
     color: '#718096',
-    marginBottom: '30px',
-    lineHeight: '1.6',
+    margin: '0 auto 14px auto',
+    lineHeight: '1.5',
+    maxHeight: '120px',
+    overflowY: 'auto',
+    padding: '0 6px',
+    wordBreak: 'break-word',
+  },
+  errorHint: {
+    fontSize: '13px',
+    color: '#4a5568',
+    marginBottom: '18px',
   },
   retryButton: {
-    padding: '14px 30px',
-    fontSize: '16px',
+    padding: '12px 24px',
+    fontSize: '14px',
     fontWeight: '600',
     color: 'white',
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

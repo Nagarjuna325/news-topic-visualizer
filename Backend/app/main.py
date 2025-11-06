@@ -97,7 +97,10 @@ async def analyze_article(request: URLRequest) -> AnalysisResponse:
         
         # Step 3: Extract topics/keywords
         logger.info("Extracting topics...")
-        words_data = topic_analyzer.analyze(tokens, method='tfidf')
+        method = (request.method or 'tfidf').lower()
+        if method not in ('tfidf', 'lda'):
+            raise ValueError("Invalid method. Use 'tfidf' or 'lda'.")
+        words_data = topic_analyzer.analyze(tokens, method=method)
         
         if not words_data:
             raise ValueError("Could not extract meaningful topics from article")
