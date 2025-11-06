@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 const SAMPLE_URLS = [
-  'https://www.bbc.com/news/world-us-canada-68835509',
-  'https://www.theguardian.com/technology/2024/may/01/ai-regulation-global-outlook',
-  'https://www.nytimes.com/2024/05/15/technology/ai-search-changes.html',
-  'https://www.wired.com/story/cybersecurity-supply-chain-attacks-rise/',
-  'https://arstechnica.com/science/2024/05/a-new-battery-breakthrough-promises-higher-energy-density/'
+  'https://www.bbc.com',
+  'https://www.cnn.com/',
+  'https://www.nytimes.com',
+  'https://www.wired.com',
+  'https://arstechnica.com'
 ];
 
 const URLInput = ({ onAnalyze, isLoading }) => {
