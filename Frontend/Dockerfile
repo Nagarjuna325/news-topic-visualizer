@@ -14,14 +14,14 @@ RUN npm ci
 COPY Frontend/ .
 
 
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
+# ARG VITE_API_URL
+# ENV VITE_API_URL=$VITE_API_URL
 
 # Build the application
 RUN npm run build
 
 # Stage 2: Production stage with Nginx
-FROM nginx:alpine
+# FROM nginx:alpine
 
 # Copy built files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
