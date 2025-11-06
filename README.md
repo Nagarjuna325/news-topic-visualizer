@@ -71,5 +71,4 @@ Deploy TWO services from the SAME repo.
 - “Article too short”: try a longer article or lower thresholds in the backend.
 - Railway build issues: ensure each service uses the correct Root Directory + Dockerfile Path pairing.
 
-## License / Contributing
-Add your preferred license and contribution guidelines here.
+
