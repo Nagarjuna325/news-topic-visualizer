@@ -11,7 +11,7 @@ COPY Frontend/package*.json ./
 RUN npm ci 
 
 # Copy source code
-COPY Frontend/ ..
+COPY Frontend/ .
 
 
 ARG VITE_API_URL=http://localhost:8000
