@@ -79,8 +79,8 @@ function App() {
     return (
       <div style={styles.fullscreen}>
         <div style={styles.errorContainer}>
-          <div style={styles.errorIcon}>⚠️</div>
-          <h2 style={styles.errorTitle}>Oops! Something went wrong</h2>
+          <div style={styles.errorIcon}>⚠️Try a specific news article (not a homepage) with enough text content.</div>
+          <h2 style={styles.errorTitle}></h2>
           <p style={styles.errorMessage}>{state.error}</p>
           <button onClick={handleRetry} style={styles.retryButton}>
             Try Again

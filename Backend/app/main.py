@@ -91,7 +91,7 @@ async def analyze_article(request: URLRequest) -> AnalysisResponse:
         tokens = text_cleaner.preprocess(text)
         
         if len(tokens) < 10:
-            raise ValueError("Article content too short for meaningful analysis")
+            raise ValueError("Article content too short for meaningful analysis,need at least 10 meaningful words after cleaning. Please provide a longer article URL.")
         
         logger.info(f"Preprocessed {len(tokens)} tokens")
         
