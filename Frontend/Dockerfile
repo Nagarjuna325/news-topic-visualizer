@@ -5,13 +5,13 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY Frontend/package*.json ./
 
 # Install dependencies
 RUN npm ci 
 
 # Copy source code
-COPY . .
+COPY Frontend/ ..
 
 
 ARG VITE_API_URL=http://localhost:8000
@@ -28,7 +28,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+COPY Frontend/nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Expose port
 EXPOSE 80
