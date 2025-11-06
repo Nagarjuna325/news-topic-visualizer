@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SAMPLE_URLS = [
   'https://www.bbc.com/news/technology',
-  'https://www.theguardian.com/technology',
+  'https://www.theguardian.com/us/technology',
   'https://techcrunch.com/',
   'https://www.wired.com/',
   'https://arstechnica.com/'
