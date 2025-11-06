@@ -1,4 +1,6 @@
 server {
+listen 80;
+listen [::]:80;
 listen ${PORT};
 listen [::]:${PORT};
 server_name _;
