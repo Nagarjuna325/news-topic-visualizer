@@ -14,28 +14,22 @@ RUN npm ci
 COPY Frontend/ .
 
 
-# ARG VITE_API_URL
-# ENV VITE_API_URL=$VITE_API_URL
-
 # Build the application
 RUN npm run build
 
 # Stage 2: Production stage with Nginx
-# FROM nginx:alpine
+FROM nginx:alpine
 
 # Copy built files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 COPY Frontend/nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Expose port
 EXPOSE 80
 
-# Health check
-# HEALTHCHECK --interval=30s --timeout=3s \
-#     CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
