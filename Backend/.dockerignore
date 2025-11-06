@@ -3,26 +3,30 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.Python
 venv/
 env/
 ENV/
 *.egg-info/
+.pytest_cache/
 
-# Node
-node_modules/
-dist/
-.cache/
-
-# IDE
+# IDEs
 .vscode/
 .idea/
 *.swp
+*.swo
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
 
 # Environment
 .env
 .env.local
 
-# Logs
-*.log
-docker-compose.override.yml
+# Git
+.git/
+.gitignore
