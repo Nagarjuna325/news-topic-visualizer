@@ -14,10 +14,13 @@ Analyze a news article URL, extract keywords, and visualize them as an interacti
 - `docker-compose.yml` — optional local dev (runs both services)
 
 ## How It Works
-1) Fetch article content (Newspaper3k → BeautifulSoup fallback).
-2) Clean/tokenize with NLTK; remove stopwords and very short tokens.
-3) Compute TF‑IDF (unigrams + bigrams), normalize scores to [0–1].
-4) Render a 3D word cloud; size/color scale with normalized weight.
+1) Method toggle: choose TF‑IDF (default) or LDA in the UI.
+2) Weights drive color, size, AND proximity to center.
+3) Top Keywords side panel lists exact scores with bars.
+4) Fetch article content (Newspaper3k → BeautifulSoup fallback).
+5) Clean/tokenize with NLTK; remove stopwords and very short tokens.
+6) Compute TF‑IDF (unigrams + bigrams), normalize scores to [0–1].
+7) Render a 3D word cloud; size/color scale and centrality track normalized weight.
 
 ## Local Development (Docker Compose)
 ```bash
@@ -46,7 +49,7 @@ npm run dev
 ## API
 - `GET /health` → `{"status":"healthy"}`
 - `POST /analyze`
-  - Body: `{"url": "https://example.com/article"}`
+  - Body: `{"url": "<article_url>", "method": "tfidf" | "lda"}` (optional `method`, default `tfidf`)
   - Returns: `{ success, url, title, words: [{word, weight}], total_words, message }`
   - Note: Use actual article pages (not homepages). Short/JS‑heavy pages may be rejected.
 
@@ -70,5 +73,4 @@ Deploy TWO services from the SAME repo.
 - Frontend calling `localhost` in production: set `VITE_API_URL` for the production build and redeploy.
 - “Article too short”: try a longer article or lower thresholds in the backend.
 - Railway build issues: ensure each service uses the correct Root Directory + Dockerfile Path pairing.
-
 

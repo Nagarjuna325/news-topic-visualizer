@@ -4,6 +4,9 @@ Renders a 3D word cloud based on keywords returned by the backend.
 
 ## Features
 - Interactive 3D cloud (rotate, zoom, pan) with size/color mapped to relevance.
+- Heavier words are positioned closer to the center for visual hierarchy.
+- Right-side panel lists top keywords with exact scores and bars.
+- Method toggle: choose TF‑IDF (default) or LDA.
 - Sample URLs, validation, and friendly error states.
 - Static build served by Nginx in production.
 
@@ -40,4 +43,3 @@ npm run preview # optional local preview
 - Frontend calling `localhost` in production: ensure `VITE_API_URL` is set in `.env.production` and rebuild.
 - CORS preflight OK but POST fails: confirm the backend URL and that the endpoint is `POST /analyze`.
 - Assets cached: hard refresh (Ctrl/Cmd+Shift+R) after each deploy.
-

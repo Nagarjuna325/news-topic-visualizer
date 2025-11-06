@@ -20,8 +20,8 @@ Swagger UI: http://localhost:8000/docs
 
 ## Endpoints
 - `GET /health` → `{"status":"healthy"}`
-- `POST /analyze`
-  - Body: `{"url": "<article_url>"}`
+ - `POST /analyze`
+   - Body: `{"url": "<article_url>", "method": "tfidf" | "lda"}` (optional `method`, default `tfidf`)
   - Returns: `{ success, url, title, words: [{word, weight}], total_words, message }`
   - Notes: Use actual article pages (not homepages). Short/JS‑heavy pages may be rejected.
 
@@ -43,4 +43,3 @@ Swagger UI: http://localhost:8000/docs
 ## Troubleshooting
 - “Article too short”: try a longer form article or relax thresholds.
 - Newspaper3k fails: fallback to BeautifulSoup runs automatically, but JS‑heavy sites may still be sparse.
-
