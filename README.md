@@ -53,6 +53,18 @@ npm run dev
   - Returns: `{ success, url, title, words: [{word, weight}], total_words, message }`
   - Note: Use actual article pages (not homepages). Short/JS‑heavy pages may be rejected.
 
+## System Architecture Diagram
+
+<img src="diagrams/System-Architecture-Diagram.png" alt="Repository Structure" width="1000" />
+
+## Repository Layout Diagram
+
+<img src="diagrams/Repository-Layout-Diagram.png" alt="Repository Structure" width="1000" />
+
+## End-to-End Processing Overview
+
+<img src="diagrams/End-to-End-Processing-Overview.png" alt="Repository Structure" width="1000" />
+
 ## Deployment (Railway)
 Deploy TWO services from the SAME repo.
 
@@ -73,4 +85,5 @@ Deploy TWO services from the SAME repo.
 - Frontend calling `localhost` in production: set `VITE_API_URL` for the production build and redeploy.
 - “Article too short”: try a longer article or lower thresholds in the backend.
 - Railway build issues: ensure each service uses the correct Root Directory + Dockerfile Path pairing.
+
 
