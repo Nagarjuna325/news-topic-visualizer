@@ -1,0 +1,97 @@
+﻿.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.errorContainer {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 520px;
+  margin: 0 auto;
+  margin-top: 10vh;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.errorIcon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.errorTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.errorMessage {
+  font-size: 14px;
+  color: #718096;
+  margin: 0 auto 14px auto;
+  line-height: 1.5;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 0 6px;
+  word-break: break-word;
+}
+
+.errorHint {
+  font-size: 13px;
+  color: #4a5568;
+  margin-bottom: 18px;
+}
+
+.retryButton {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.helpText {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.code {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background: #2d3748;
+  color: #fff;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.statusBadge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #718096;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.statusOnline {
+  color: #48bb78;
+}
